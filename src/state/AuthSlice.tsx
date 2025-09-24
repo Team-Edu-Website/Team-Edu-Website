@@ -1,9 +1,7 @@
-// features/auth/authSlice.ts
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axiosClient from "../utils/axios";
 
-// ✅ أنواع
 interface User {
   id?: string;
   fullName?: string;
@@ -60,9 +58,12 @@ export const login = createAsyncThunk(
   async (data: LoginData, { rejectWithValue }) => {
     try {
       const res = await axiosClient.post("/auth/login", data);
+
+      
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
+
       return res.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Login failed");
@@ -76,7 +77,7 @@ export const forgotPassword = createAsyncThunk(
   async (data: { email: string }, { rejectWithValue }) => {
     try {
       const res = await axiosClient.post("/user/forgot-password", data);
-      return res.data; // { message, success }
+      return res.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "فشل إرسال رابط إعادة التعيين");
     }
@@ -90,7 +91,7 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      localStorage.removeItem("token");
+      localStorage.removeItem("token"); // ✅ مسح التوكن من localStorage
     },
   },
   extraReducers: (builder) => {
@@ -114,9 +115,9 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(login.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload.user; // ✅ مش هنخزن التوكن في Redux
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;

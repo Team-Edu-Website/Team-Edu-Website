@@ -1,9 +1,16 @@
 import React from 'react'
-
+import SectioninHome  from "./SectionOneinHome.tsx"
+import CoursesGrid from './SectionThreeinHome.tsx'
+import InstructorBanner from './InstructorBanner.tsx'
+import Instructors from './Instructors.tsx'
 function Home() {
   return (
-    <div>
-      <p>mostafa</p>
+    <div >
+      <SectioninHome/>
+      <CoursesGrid/>
+      <InstructorBanner/>
+      <Instructors/>
+
     </div>
   )
 }

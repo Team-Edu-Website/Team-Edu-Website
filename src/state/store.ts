@@ -1,11 +1,13 @@
 // app/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./AuthSlice";
-import type { TypeOf } from "zod/v3";
+import lessonReducer from "../state/LessonState";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+        lesson: lessonReducer,
+
   },
 });
 
