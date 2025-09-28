@@ -1,3 +1,4 @@
+// src/components/AuthForms.tsx
 import { useState } from "react";
 import { forgotPassword, resetPassword } from "../api/userApi";
 
@@ -11,19 +12,22 @@ export default function AuthForms() {
   const handleForgot = async () => {
     try {
       const res = await forgotPassword(email);
-      setMessage(res.message || "OTP sent to your email");
+      setMessage(res.message || "✅ OTP sent to your email");
       setStep("reset");
     } catch (err: any) {
-      setMessage(err.message || "Failed to send OTP");
+      setMessage(err.message || "❌ Failed to send OTP");
     }
   };
 
   const handleReset = async () => {
     try {
       const res = await resetPassword(email, otp, password);
-      setMessage(res.message || "Password reset successful");
+      setMessage(res.message || "✅ Password reset successful");
+      setStep("forgot"); // reset flow back
+      setOtp("");
+      setPassword("");
     } catch (err: any) {
-      setMessage(err.message || "Failed to reset password");
+      setMessage(err.message || "❌ Failed to reset password");
     }
   };
 
